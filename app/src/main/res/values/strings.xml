@@ -17,10 +17,30 @@
 
     <!-- Snackbar messages -->
     <string name="snackbar_note_added">Note added ✔</string>
+    <string name="snackbar_note_updated">Note updated ✔</string>
     <string name="snackbar_undo">UNDO</string>
 
     <!-- Menu / Actions -->
     <string name="menu_edit">Edit</string>
     <string name="menu_delete">Delete</string>
     <string name="menu_detail">Details</string>
+
+    <!-- Dialog titles -->
+    <string name="dialog_edit_title">Edit entry</string>
+    <string name="dialog_detail_title">Entry details</string>
+    <string name="dialog_delete_title">Delete entry?</string>
+    <string name="dialog_delete_message">Do you really want to delete this entry?</string>
+
+    <!-- Dialog buttons -->
+    <string name="btn_save">Save</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_delete">Delete</string>
+    <string name="btn_close">Close</string>
+
+    <!-- Labels -->
+    <string name="label_title">Title</string>
+    <string name="label_date">Date</string>
+    <string name="label_content">Content</string>
+    <string name="label_tags">Tags</string>
+    <string name="label_no_content">No content</string>
 </resources>

@@ -17,7 +17,7 @@
 
         <!-- Icon -->
         <ImageView
-                android:id="@+id/icon"
+                android:id="@+id/iv_icon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_time"
@@ -27,7 +27,7 @@
 
         <!-- Menu -->
         <ImageView
-                android:id="@+id/ivMenu"
+                android:id="@+id/iv_menu"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_more"
@@ -40,36 +40,38 @@
 
         <!-- Title -->
         <TextView
-                android:id="@+id/tvTitle"
+                android:id="@+id/tv_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="?attr/textAppearanceTitleMedium"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@id/icon"
-                app:layout_constraintEnd_toStartOf="@id/ivMenu"
+                app:layout_constraintStart_toEndOf="@id/iv_icon"
+                app:layout_constraintEnd_toStartOf="@id/iv_menu"
                 android:layout_marginStart="12dp"/>
 
         <!-- Date -->
         <TextView
-                android:id="@+id/tvDate"
+                android:id="@+id/tv_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?attr/textAppearanceLabelMedium"
                 android:textColor="?attr/colorOnSurfaceVariant"
-                app:layout_constraintTop_toBottomOf="@id/tvTitle"
-                app:layout_constraintStart_toStartOf="@id/tvTitle"
+                app:layout_constraintTop_toBottomOf="@id/tv_title"
+                app:layout_constraintStart_toStartOf="@id/tv_title"
                 android:layout_marginTop="2dp"/>
 
-        <!-- Content -->
+        <!-- Tags -->
         <TextView
-                android:id="@+id/tvContent"
+                android:id="@+id/tv_tags"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceBodyMedium"
-                app:layout_constraintTop_toBottomOf="@id/tvDate"
-                app:layout_constraintStart_toStartOf="@id/tvTitle"
-                app:layout_constraintEnd_toEndOf="@id/ivMenu"
-                android:layout_marginTop="6dp"/>
+                android:textAppearance="?attr/textAppearanceLabelSmall"
+                android:textColor="?attr/colorPrimary"
+                app:layout_constraintTop_toBottomOf="@id/tv_date"
+                app:layout_constraintStart_toStartOf="@id/tv_title"
+                app:layout_constraintEnd_toEndOf="@id/iv_menu"
+                android:layout_marginTop="4dp"
+                android:visibility="gone"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
