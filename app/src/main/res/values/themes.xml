@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.JournalPersonnel" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.PersonalJournal" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Base colors -->
         <item name="colorPrimary">@color/md_theme_light_primary</item>
         <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
@@ -21,5 +21,5 @@
         <item name="materialCalendarTheme">@style/ThemeOverlay.Material3.MaterialCalendar</item>
     </style>
 
-    <style name="Theme.JournalPersonnel" parent="Base.Theme.JournalPersonnel"/>
+    <style name="Theme.PersonalJournal" parent="Base.Theme.PersonalJournal"/>
 </resources>
