@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Application name -->
+    <string name="app_name">Journal Personnel</string>
+
+    <!-- Form hints -->
+    <string name="title_input_layout_hint">Titre</string>
+    <string name="content_input_layout_hint">Écris ton journal</string>
+    <string name="tag_input_layout_hint">Ajouter un tag</string>
+    <string name="date_text_view_hint">📅 Sélectionner une date</string>
+
+    <!-- Button -->
+    <string name="save_button_text">Enregistrer</string>
+
+    <!-- DatePicker -->
+    <string name="date_picker_title">Choisir une date</string>
+
+    <!-- Snackbar messages -->
+    <string name="snackbar_note_added">Note ajoutée ✔</string>
+    <string name="snackbar_undo">ANNULER</string>
+
+    <!-- Menu / Actions -->
+    <string name="menu_edit">Modifier</string>
+    <string name="menu_delete">Supprimer</string>
+    <string name="menu_detail">Détails</string>
+</resources>

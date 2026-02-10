@@ -2,8 +2,10 @@ build/
 .gradle/
 .idea/
 .kotlin/
+captures/
+.externalNativeBuild/
+.cxx/
 
-*.jks
-*.keystore
+*.iml
 .DS_Store
 local.properties
