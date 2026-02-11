@@ -10,14 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.oblivion.personaljournal.R
 import com.oblivion.personaljournal.data.entity.JournalEntity
 import com.oblivion.personaljournal.databinding.JournalItemBinding
-import java.text.SimpleDateFormat
-import java.util.Locale
+import com.oblivion.personaljournal.utils.DateUtils
 
 class JournalAdapter(
     private val onMenuClick: (JournalEntity, MenuItem) -> Unit,
 ) : RecyclerView.Adapter<JournalAdapter.JournalViewHolder>() {
     private val items = mutableListOf<JournalEntity>()
-    private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
     inner class JournalViewHolder(
         val binding: JournalItemBinding,
@@ -34,7 +32,7 @@ class JournalAdapter(
         fun bind(item: JournalEntity) {
             with(binding) {
                 tvTitle.text = item.title
-                tvDate.text = dateFormat.format(item.date)
+                tvDate.text = DateUtils.dateFormat.format(item.date)
 
                 if (item.tags.isNotEmpty()) {
                     tvTags.isVisible = true

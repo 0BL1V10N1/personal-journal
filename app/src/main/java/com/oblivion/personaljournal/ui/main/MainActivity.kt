@@ -3,19 +3,15 @@ package com.oblivion.personaljournal.ui.main
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.inputmethod.EditorInfo
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
 import com.google.android.material.color.DynamicColors
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -26,11 +22,10 @@ import com.oblivion.personaljournal.databinding.ActivityMainBinding
 import com.oblivion.personaljournal.databinding.DialogDetailEntryBinding
 import com.oblivion.personaljournal.databinding.DialogEditEntryBinding
 import com.oblivion.personaljournal.ui.adapter.JournalAdapter
-import com.oblivion.personaljournal.utils.Constants.MAX_TAGS
+import com.oblivion.personaljournal.utils.ChipUtils
+import com.oblivion.personaljournal.utils.DateUtils
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -41,7 +36,6 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: JournalViewModel by viewModels()
 
     private var selectedDate: Date? = null
-    private val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         DynamicColors.applyToActivityIfAvailable(this)
@@ -86,69 +80,34 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupChipInput() {
-        binding.etTag.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                val text =
-                    binding.etTag.text
-                        ?.toString()
-                        ?.trim()
-                        .orEmpty()
-
-                if (text.isNotEmpty()) {
-                    val cg = binding.cgTags
-                    if (cg.childCount < MAX_TAGS) {
-                        addChipToGroup(cg, text)
-                    } else {
-                        Toast.makeText(this, "Vous ne pouvez ajouter que $MAX_TAGS tags.", Toast.LENGTH_SHORT).show()
-                    }
-
-                    binding.etTag.text?.clear()
-                }
-
-                true
-            } else {
-                false
-            }
-        }
+        ChipUtils.setupTagInput(this, binding.etTag, binding.cgTags)
     }
 
     private fun setupRecyclerView() {
-        adapter =
-            JournalAdapter(
-                onMenuClick = { item, menuItem ->
-                    when (menuItem.itemId) {
-                        R.id.menu_edit -> showEditDialog(item)
-                        R.id.menu_delete -> showDeleteDialog(item)
-                        R.id.menu_detail -> showDetailDialog(item)
-                    }
-                },
-            )
-
+        adapter = createJournalAdapter(hideSearchOnEdit = false)
         binding.rvJournal.adapter = adapter
         binding.rvJournal.layoutManager = LinearLayoutManager(this)
 
-        searchAdapter =
-            JournalAdapter(
-                onMenuClick = { item, menuItem ->
-                    when (menuItem.itemId) {
-                        R.id.menu_edit -> {
-                            binding.svSearch.hide()
-                            showEditDialog(item)
-                        }
-
-                        R.id.menu_delete -> {
-                            showDeleteDialog(item)
-                        }
-
-                        R.id.menu_detail -> {
-                            showDetailDialog(item)
-                        }
-                    }
-                },
-            )
-
+        searchAdapter = createJournalAdapter(hideSearchOnEdit = true)
         binding.rvSearchResults.adapter = searchAdapter
         binding.rvSearchResults.layoutManager = LinearLayoutManager(this)
+    }
+
+    private fun createJournalAdapter(hideSearchOnEdit: Boolean): JournalAdapter {
+        return JournalAdapter(
+            onMenuClick = { item, menuItem ->
+                when (menuItem.itemId) {
+                    R.id.menu_edit -> {
+                        if (hideSearchOnEdit) {
+                            binding.svSearch.hide()
+                        }
+                        showEditDialog(item)
+                    }
+                    R.id.menu_delete -> showDeleteDialog(item)
+                    R.id.menu_detail -> showDetailDialog(item)
+                }
+            },
+        )
     }
 
     private fun setupSearch() {
@@ -193,7 +152,7 @@ class MainActivity : AppCompatActivity() {
                 onDateSelected(date)
             } else {
                 selectedDate = date
-                binding.tvDate.text = "📅 ${dateFormat.format(date)}"
+                binding.tvDate.text = "📅 ${DateUtils.dateFormat.format(date)}"
                 updateButtonState()
             }
         }
@@ -220,51 +179,25 @@ class MainActivity : AppCompatActivity() {
 
         dialogBinding.etTitle.setText(entry.title)
         dialogBinding.etContent.setText(entry.content)
-        dialogBinding.tvDate.text = "📅 ${dateFormat.format(entry.date)}"
+        dialogBinding.tvDate.text = "📅 ${DateUtils.dateFormat.format(entry.date)}"
         entry.tags.forEach { tag ->
-            addChipToGroup(dialogBinding.cgTags, tag)
+            ChipUtils.addChipToGroup(this, dialogBinding.cgTags, tag)
         }
 
         dialogBinding.tvDate.setOnClickListener {
             showDatePicker(editedDate) { newDate ->
                 editedDate = newDate
-                dialogBinding.tvDate.text = "📅 ${dateFormat.format(newDate)}"
+                dialogBinding.tvDate.text = "📅 ${DateUtils.dateFormat.format(newDate)}"
             }
         }
 
-        dialogBinding.etTags.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                val tagText =
-                    dialogBinding.etTags.text
-                        ?.toString()
-                        ?.trim()
-                        .orEmpty()
-
-                if (tagText.isNotEmpty()) {
-                    val cg = dialogBinding.cgTags
-                    if (cg.childCount < MAX_TAGS) {
-                        addChipToGroup(cg, tagText)
-                        dialogBinding.etTags.text?.clear()
-                    } else {
-                        Toast.makeText(this, "Vous ne pouvez ajouter que $MAX_TAGS tags.", Toast.LENGTH_SHORT).show()
-                    }
-                }
-
-                true
-            } else {
-                false
-            }
-        }
+        ChipUtils.setupTagInput(this, dialogBinding.etTags, dialogBinding.cgTags)
 
         MaterialAlertDialogBuilder(this)
             .setTitle(R.string.dialog_edit_title)
             .setView(dialogBinding.root)
             .setPositiveButton(R.string.btn_save) { dialog, _ ->
-                val newTags =
-                    dialogBinding.cgTags.children
-                        .filterIsInstance<Chip>()
-                        .map { it.text.toString() }
-                        .toList()
+                val newTags = ChipUtils.extractChipTexts(dialogBinding.cgTags)
 
                 val updatedEntry =
                     entry.copy(
@@ -296,7 +229,7 @@ class MainActivity : AppCompatActivity() {
         val dialogBinding = DialogDetailEntryBinding.inflate(LayoutInflater.from(this))
 
         dialogBinding.tvTitle.text = entry.title
-        dialogBinding.tvDate.text = dateFormat.format(entry.date)
+        dialogBinding.tvDate.text = DateUtils.dateFormat.format(entry.date)
         dialogBinding.tvContent.text = entry.content.ifEmpty { getString(R.string.label_no_content) }
 
         if (entry.tags.isNotEmpty()) {
@@ -323,29 +256,8 @@ class MainActivity : AppCompatActivity() {
             }.show()
     }
 
-    private fun addChipToGroup(
-        chipGroup: ChipGroup,
-        text: String,
-    ) {
-        val chip =
-            Chip(this).apply {
-                this.text = text
-                isCloseIconVisible = true
-
-                setOnCloseIconClickListener {
-                    chipGroup.removeView(this)
-                }
-            }
-
-        chipGroup.addView(chip)
-    }
-
     private fun addItem() {
-        val existingTags =
-            binding.cgTags.children
-                .filterIsInstance<Chip>()
-                .map { it.text.toString() }
-                .toList()
+        val existingTags = ChipUtils.extractChipTexts(binding.cgTags)
 
         val entry =
             JournalEntity(
