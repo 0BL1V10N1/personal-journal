@@ -13,6 +13,7 @@ import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -28,6 +29,7 @@ import com.oblivion.personaljournal.databinding.DialogEditEntryBinding
 import com.oblivion.personaljournal.ui.adapter.JournalAdapter
 import com.oblivion.personaljournal.utils.Constants.MAX_TAGS
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -361,15 +363,17 @@ class MainActivity : AppCompatActivity() {
                 tags = existingTags,
             )
 
-        viewModel.insert(entry)
+        lifecycleScope.launch {
+            val insertedId = viewModel.insert(entry)
 
-        clearInputs()
+            clearInputs()
 
-        Snackbar
-            .make(binding.root, R.string.snackbar_note_added, Snackbar.LENGTH_LONG)
-            .setAction(R.string.snackbar_undo) {
-                viewModel.delete(entry)
-            }.show()
+            Snackbar
+                .make(binding.root, R.string.snackbar_note_added, Snackbar.LENGTH_LONG)
+                .setAction(R.string.snackbar_undo) {
+                    viewModel.deleteById(insertedId)
+                }.show()
+        }
     }
 
     private fun clearInputs() {
