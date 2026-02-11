@@ -43,4 +43,7 @@
     <string name="label_content">Content</string>
     <string name="label_tags">Tags</string>
     <string name="label_no_content">No content</string>
+
+    <!-- Search -->
+    <string name="search_hint">Search entries…</string>
 </resources>

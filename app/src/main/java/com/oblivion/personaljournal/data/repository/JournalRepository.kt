@@ -9,6 +9,8 @@ class JournalRepository(
 ) {
     val allEntries: Flow<List<JournalEntity>> = journalDao.getAllEntries()
 
+    fun searchEntries(query: String): Flow<List<JournalEntity>> = journalDao.searchEntries(query)
+
     suspend fun insert(entry: JournalEntity): Long = journalDao.insert(entry)
 
     suspend fun update(entry: JournalEntity) {

@@ -7,8 +7,11 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.chip.Chip
@@ -33,6 +36,7 @@ import java.util.Locale
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: JournalAdapter
+    private lateinit var searchAdapter: JournalAdapter
 
     private val viewModel: JournalViewModel by viewModels()
 
@@ -46,12 +50,25 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupWindowInsets()
         setupListeners()
         setupChipInput()
         setupRecyclerView()
+        setupSearch()
         observeData()
 
         updateButtonState()
+    }
+
+    private fun setupWindowInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.updatePadding(
+                top = insets.top,
+                bottom = insets.bottom,
+            )
+            WindowInsetsCompat.CONSUMED
+        }
     }
 
     private fun setupListeners() {
@@ -109,11 +126,51 @@ class MainActivity : AppCompatActivity() {
 
         binding.rvJournal.adapter = adapter
         binding.rvJournal.layoutManager = LinearLayoutManager(this)
+
+        searchAdapter =
+            JournalAdapter(
+                onMenuClick = { item, menuItem ->
+                    when (menuItem.itemId) {
+                        R.id.menu_edit -> {
+                            binding.svSearch.hide()
+                            showEditDialog(item)
+                        }
+
+                        R.id.menu_delete -> {
+                            showDeleteDialog(item)
+                        }
+
+                        R.id.menu_detail -> {
+                            showDetailDialog(item)
+                        }
+                    }
+                },
+            )
+
+        binding.rvSearchResults.adapter = searchAdapter
+        binding.rvSearchResults.layoutManager = LinearLayoutManager(this)
+    }
+
+    private fun setupSearch() {
+        binding.svSearch.setupWithSearchBar(binding.sbSearch)
+
+        binding.svSearch.editText.addTextChangedListener { text ->
+            viewModel.setSearchQuery(text?.toString().orEmpty())
+        }
+
+        binding.svSearch.editText.setOnEditorActionListener { _, _, _ ->
+            binding.sbSearch.setText(binding.svSearch.text)
+            false
+        }
     }
 
     private fun observeData() {
         viewModel.allEntries.observe(this) { entries ->
             adapter.submitList(entries)
+        }
+
+        viewModel.searchResults.observe(this) { entries ->
+            searchAdapter.submitList(entries)
         }
     }
 
@@ -125,7 +182,7 @@ class MainActivity : AppCompatActivity() {
         val picker =
             MaterialDatePicker.Builder
                 .datePicker()
-                .setTitleText(getString(R.string.date_picker_title))
+                .setTitleText(R.string.date_picker_title)
                 .setSelection(initialDate?.time ?: MaterialDatePicker.todayInUtcMilliseconds())
                 .build()
 
@@ -226,7 +283,7 @@ class MainActivity : AppCompatActivity() {
                 viewModel.update(updatedEntry)
 
                 Snackbar
-                    .make(binding.root, getString(R.string.snackbar_note_updated), Snackbar.LENGTH_SHORT)
+                    .make(binding.root, R.string.snackbar_note_updated, Snackbar.LENGTH_SHORT)
                     .show()
 
                 dialog.dismiss()
@@ -309,8 +366,10 @@ class MainActivity : AppCompatActivity() {
         clearInputs()
 
         Snackbar
-            .make(binding.root, getString(R.string.snackbar_note_added), Snackbar.LENGTH_LONG)
-            .show()
+            .make(binding.root, R.string.snackbar_note_added, Snackbar.LENGTH_LONG)
+            .setAction(R.string.btn_cancel) {
+                viewModel.deleteById(entry.id)
+            }.show()
     }
 
     private fun clearInputs() {

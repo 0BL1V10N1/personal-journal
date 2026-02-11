@@ -1,8 +1,10 @@
 package com.oblivion.personaljournal.ui.main
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import com.oblivion.personaljournal.data.entity.JournalEntity
 import com.oblivion.personaljournal.data.repository.JournalRepository
@@ -17,6 +19,21 @@ class JournalViewModel
         private val repository: JournalRepository,
     ) : ViewModel() {
         val allEntries: LiveData<List<JournalEntity>> = repository.allEntries.asLiveData()
+
+        private val searchQuery = MutableLiveData("")
+
+        val searchResults: LiveData<List<JournalEntity>> =
+            searchQuery.switchMap { query ->
+                if (query.isNullOrBlank()) {
+                    repository.allEntries.asLiveData()
+                } else {
+                    repository.searchEntries(query).asLiveData()
+                }
+            }
+
+        fun setSearchQuery(query: String) {
+            searchQuery.value = query
+        }
 
         fun insert(entry: JournalEntity) =
             viewModelScope.launch {
