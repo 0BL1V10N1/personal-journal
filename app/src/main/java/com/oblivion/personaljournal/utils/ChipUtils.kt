@@ -26,11 +26,11 @@ object ChipUtils {
     fun addChipToGroup(
         context: Context,
         chipGroup: ChipGroup,
-        text: String,
+        chipText: String,
     ) {
         val chip =
             Chip(context).apply {
-                this.text = text
+                this.text = chipText
                 isCloseIconVisible = true
 
                 setOnCloseIconClickListener {
@@ -51,15 +51,15 @@ object ChipUtils {
     ) {
         editText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                val text =
+                val inputText =
                     editText.text
                         ?.toString()
                         ?.trim()
                         .orEmpty()
 
-                if (text.isNotEmpty()) {
+                if (inputText.isNotEmpty()) {
                     if (chipGroup.childCount < MAX_TAGS) {
-                        addChipToGroup(context, chipGroup, text)
+                        addChipToGroup(context, chipGroup, inputText)
                     } else {
                         Toast.makeText(context, "Vous ne pouvez ajouter que $MAX_TAGS tags.", Toast.LENGTH_SHORT).show()
                     }
