@@ -7,8 +7,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.color.DynamicColors
 import com.google.android.material.snackbar.Snackbar
 import com.oblivion.personaljournal.R
 import com.oblivion.personaljournal.data.entity.JournalEntity
@@ -17,6 +17,7 @@ import com.oblivion.personaljournal.ui.adapter.JournalAdapter
 import com.oblivion.personaljournal.utils.ChipUtils
 import com.oblivion.personaljournal.utils.DateUtils
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.util.Date
 
 @AndroidEntryPoint
@@ -31,7 +32,6 @@ class MainActivity : AppCompatActivity() {
     private var selectedDate: Date? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        DynamicColors.applyToActivityIfAvailable(this)
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -160,15 +160,17 @@ class MainActivity : AppCompatActivity() {
                 tags = existingTags,
             )
 
-        viewModel.insert(entry)
-
         clearInputs()
 
-        Snackbar
-            .make(binding.root, R.string.snackbar_note_added, Snackbar.LENGTH_LONG)
-            .setAction(R.string.btn_cancel) {
-                viewModel.deleteById(entry.id)
-            }.show()
+        lifecycleScope.launch {
+            val insertedId = viewModel.insert(entry)
+
+            Snackbar
+                .make(binding.root, R.string.snackbar_note_added, Snackbar.LENGTH_LONG)
+                .setAction(R.string.btn_cancel) {
+                    viewModel.deleteById(insertedId)
+                }.show()
+        }
     }
 
     private fun clearInputs() {
