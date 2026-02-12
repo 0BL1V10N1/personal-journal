@@ -1,6 +1,7 @@
 package com.oblivion.personaljournal.ui.main
 
 import android.os.Bundle
+import android.util.TypedValue
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -37,6 +38,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        restoreStatusBarColor()
+
         dialogHelper =
             JournalDialogHelper(
                 activity = this,
@@ -61,6 +64,15 @@ class MainActivity : AppCompatActivity() {
                 bottom = insets.bottom,
             )
             WindowInsetsCompat.CONSUMED
+        }
+    }
+
+    // Restore status bar color overridden by edge-to-edge (activity-ktx >= 1.9.0)
+    @Suppress("DEPRECATION") // window.statusBarColor deprecated in API 35, still works on API < 35
+    private fun restoreStatusBarColor() {
+        val typedValue = TypedValue()
+        if (theme.resolveAttribute(com.google.android.material.R.attr.colorSurface, typedValue, true)) {
+            window.statusBarColor = typedValue.data
         }
     }
 
