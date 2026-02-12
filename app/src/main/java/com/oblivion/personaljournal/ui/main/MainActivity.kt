@@ -2,6 +2,7 @@ package com.oblivion.personaljournal.ui.main
 
 import android.os.Bundle
 import android.util.TypedValue
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -24,8 +25,6 @@ import java.util.Date
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var adapter: JournalAdapter
-    private lateinit var searchAdapter: JournalAdapter
     private lateinit var dialogHelper: JournalDialogHelper
 
     private val viewModel: JournalViewModel by viewModels()
@@ -51,7 +50,6 @@ class MainActivity : AppCompatActivity() {
         setupListeners()
         setupRecyclerView()
         setupSearch()
-        observeData()
 
         updateButtonState()
     }
@@ -92,44 +90,40 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.etTitle.addTextChangedListener { updateButtonState() }
-
         binding.btnSave.setOnClickListener { addItem() }
 
         ChipUtils.setupTagInput(this, binding.etTag, binding.cgTags)
     }
 
-    private fun setupRecyclerView() {
-        adapter =
-            JournalAdapter(
-                onMenuClick = { item, menuItem ->
-                    when (menuItem.itemId) {
-                        R.id.menu_edit -> dialogHelper.showEditDialog(item, binding.root)
-                        R.id.menu_delete -> dialogHelper.showDeleteDialog(item)
-                        R.id.menu_detail -> dialogHelper.showDetailDialog(item)
-                    }
-                },
-            )
+    private fun handleMenuAction(
+        item: JournalEntity,
+        menuItem: MenuItem,
+        hideSearchOnEdit: Boolean = false,
+    ) {
+        when (menuItem.itemId) {
+            R.id.menu_edit -> {
+                if (hideSearchOnEdit) binding.svSearch.hide()
+                dialogHelper.showEditDialog(item, binding.root)
+            }
+            R.id.menu_delete -> dialogHelper.showDeleteDialog(item)
+            R.id.menu_detail -> dialogHelper.showDetailDialog(item)
+        }
+    }
 
+    private fun setupRecyclerView() {
+        val adapter = JournalAdapter { item, menuItem -> handleMenuAction(item, menuItem) }
         binding.rvJournal.adapter = adapter
         binding.rvJournal.layoutManager = LinearLayoutManager(this)
 
-        searchAdapter =
-            JournalAdapter(
-                onMenuClick = { item, menuItem ->
-                    when (menuItem.itemId) {
-                        R.id.menu_edit -> {
-                            binding.svSearch.hide()
-                            dialogHelper.showEditDialog(item, binding.root)
-                        }
-
-                        R.id.menu_delete -> dialogHelper.showDeleteDialog(item)
-                        R.id.menu_detail -> dialogHelper.showDetailDialog(item)
-                    }
-                },
-            )
-
+        val searchAdapter =
+            JournalAdapter { item, menuItem ->
+                handleMenuAction(item, menuItem, hideSearchOnEdit = true)
+            }
         binding.rvSearchResults.adapter = searchAdapter
         binding.rvSearchResults.layoutManager = LinearLayoutManager(this)
+
+        viewModel.allEntries.observe(this) { adapter.submitList(it) }
+        viewModel.searchResults.observe(this) { searchAdapter.submitList(it) }
     }
 
     private fun setupSearch() {
@@ -145,31 +139,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun observeData() {
-        viewModel.allEntries.observe(this) { entries ->
-            adapter.submitList(entries)
-        }
-
-        viewModel.searchResults.observe(this) { entries ->
-            searchAdapter.submitList(entries)
-        }
-    }
-
     private fun addItem() {
-        val existingTags = ChipUtils.extractChipTexts(binding.cgTags)
-
         val entry =
             JournalEntity(
-                title =
-                    binding.etTitle.text
-                        ?.toString()
-                        .orEmpty(),
-                content =
-                    binding.etContent.text
-                        ?.toString()
-                        .orEmpty(),
+                title = binding.etTitle.text?.toString().orEmpty(),
+                content = binding.etContent.text?.toString().orEmpty(),
                 date = selectedDate!!,
-                tags = existingTags,
+                tags = ChipUtils.extractChipTexts(binding.cgTags),
             )
 
         clearInputs()
@@ -191,17 +167,11 @@ class MainActivity : AppCompatActivity() {
         binding.cgTags.removeAllViews()
         selectedDate = null
         binding.tvDate.text = getString(R.string.date_text_view_hint)
-
         updateButtonState()
     }
 
     private fun updateButtonState() {
         binding.btnSave.isEnabled =
-            !(
-                binding.etTitle.text
-                    ?.toString()
-                    .isNullOrBlank()
-            ) &&
-            selectedDate != null
+            !binding.etTitle.text?.toString().isNullOrBlank() && selectedDate != null
     }
 }

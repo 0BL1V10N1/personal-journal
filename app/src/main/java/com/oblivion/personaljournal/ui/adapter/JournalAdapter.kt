@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.oblivion.personaljournal.R
 import com.oblivion.personaljournal.data.entity.JournalEntity
@@ -14,9 +16,7 @@ import com.oblivion.personaljournal.utils.DateUtils
 
 class JournalAdapter(
     private val onMenuClick: (JournalEntity, MenuItem) -> Unit,
-) : RecyclerView.Adapter<JournalAdapter.JournalViewHolder>() {
-    private val items = mutableListOf<JournalEntity>()
-
+) : ListAdapter<JournalEntity, JournalAdapter.JournalViewHolder>(JournalDiffCallback()) {
     inner class JournalViewHolder(
         val binding: JournalItemBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
@@ -24,7 +24,7 @@ class JournalAdapter(
             binding.ivMenu.setOnClickListener { view ->
                 val pos = bindingAdapterPosition
                 if (pos != RecyclerView.NO_POSITION) {
-                    showPopupMenu(view, items[pos])
+                    showPopupMenu(view, getItem(pos))
                 }
             }
         }
@@ -33,13 +33,8 @@ class JournalAdapter(
             with(binding) {
                 tvTitle.text = item.title
                 tvDate.text = DateUtils.dateFormat.format(item.date)
-
-                if (item.tags.isNotEmpty()) {
-                    tvTags.isVisible = true
-                    tvTags.text = item.tags.joinToString(" ") { "#$it" }
-                } else {
-                    tvTags.isVisible = false
-                }
+                tvTags.isVisible = item.tags.isNotEmpty()
+                tvTags.text = item.tags.joinToString(" ") { "#$it" }
             }
         }
 
@@ -76,14 +71,18 @@ class JournalAdapter(
         holder: JournalViewHolder,
         position: Int,
     ) {
-        holder.bind(items[position])
+        holder.bind(getItem(position))
     }
+}
 
-    override fun getItemCount(): Int = items.size
+private class JournalDiffCallback : DiffUtil.ItemCallback<JournalEntity>() {
+    override fun areItemsTheSame(
+        oldItem: JournalEntity,
+        newItem: JournalEntity,
+    ): Boolean = oldItem.id == newItem.id
 
-    fun submitList(newItems: List<JournalEntity>) {
-        items.clear()
-        items.addAll(newItems)
-        notifyDataSetChanged()
-    }
+    override fun areContentsTheSame(
+        oldItem: JournalEntity,
+        newItem: JournalEntity,
+    ): Boolean = oldItem == newItem
 }
