@@ -1,4 +1,4 @@
-package com.oblivion.personaljournal.data.dao
+package com.oblivion.personaljournal.data
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -6,7 +6,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.oblivion.personaljournal.data.entity.JournalEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

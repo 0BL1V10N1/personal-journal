@@ -1,13 +1,10 @@
-package com.oblivion.personaljournal.data.database
+package com.oblivion.personaljournal.data
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.oblivion.personaljournal.data.converter.Converters
-import com.oblivion.personaljournal.data.dao.JournalDao
-import com.oblivion.personaljournal.data.entity.JournalEntity
 
 @Database(
     entities = [JournalEntity::class],

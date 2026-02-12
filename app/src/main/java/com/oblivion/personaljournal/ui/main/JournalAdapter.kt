@@ -1,4 +1,4 @@
-package com.oblivion.personaljournal.ui.adapter
+package com.oblivion.personaljournal.ui.main
 
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.oblivion.personaljournal.R
-import com.oblivion.personaljournal.data.entity.JournalEntity
+import com.oblivion.personaljournal.data.JournalEntity
 import com.oblivion.personaljournal.databinding.JournalItemBinding
 import com.oblivion.personaljournal.utils.DateUtils
 

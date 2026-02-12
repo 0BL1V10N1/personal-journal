@@ -9,7 +9,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.oblivion.personaljournal.R
-import com.oblivion.personaljournal.data.entity.JournalEntity
+import com.oblivion.personaljournal.data.JournalEntity
 import com.oblivion.personaljournal.databinding.DialogDetailEntryBinding
 import com.oblivion.personaljournal.databinding.DialogEditEntryBinding
 import com.oblivion.personaljournal.utils.ChipUtils
