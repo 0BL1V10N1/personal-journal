@@ -35,10 +35,7 @@ class JournalViewModel
             searchQuery.value = query
         }
 
-        fun insert(entry: JournalEntity) =
-            viewModelScope.launch {
-                repository.insert(entry)
-            }
+        suspend fun insert(entry: JournalEntity): Long = repository.insert(entry)
 
         fun update(entry: JournalEntity) =
             viewModelScope.launch {
