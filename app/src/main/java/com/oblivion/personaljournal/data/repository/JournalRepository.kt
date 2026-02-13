@@ -1,5 +1,7 @@
-package com.oblivion.personaljournal.data
+package com.oblivion.personaljournal.data.repository
 
+import com.oblivion.personaljournal.data.dao.JournalDao
+import com.oblivion.personaljournal.data.entity.JournalEntity
 import kotlinx.coroutines.flow.Flow
 
 class JournalRepository(

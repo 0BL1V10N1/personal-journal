@@ -1,4 +1,4 @@
-package com.oblivion.personaljournal.data
+package com.oblivion.personaljournal.data.converter
 
 import androidx.room.TypeConverter
 import kotlinx.serialization.json.Json

@@ -13,8 +13,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.oblivion.personaljournal.R
-import com.oblivion.personaljournal.data.JournalEntity
+import com.oblivion.personaljournal.data.entity.JournalEntity
 import com.oblivion.personaljournal.databinding.ActivityMainBinding
+import com.oblivion.personaljournal.ui.adapter.JournalAdapter
 import com.oblivion.personaljournal.utils.ChipUtils
 import com.oblivion.personaljournal.utils.DateUtils
 import dagger.hilt.android.AndroidEntryPoint

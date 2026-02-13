@@ -1,9 +1,9 @@
 package com.oblivion.personaljournal.di
 
 import android.content.Context
-import com.oblivion.personaljournal.data.JournalDao
-import com.oblivion.personaljournal.data.JournalDatabase
-import com.oblivion.personaljournal.data.JournalRepository
+import com.oblivion.personaljournal.data.dao.JournalDao
+import com.oblivion.personaljournal.data.database.JournalDatabase
+import com.oblivion.personaljournal.data.repository.JournalRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
