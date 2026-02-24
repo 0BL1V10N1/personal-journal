@@ -152,6 +152,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <!-- Search View (second view) -->
     <com.google.android.material.search.SearchView
             android:id="@+id/sv_search"
             android:layout_width="match_parent"
