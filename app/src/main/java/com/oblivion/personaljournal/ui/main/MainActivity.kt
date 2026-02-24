@@ -1,13 +1,10 @@
 package com.oblivion.personaljournal.ui.main
 
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.MenuItem
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.core.widget.addTextChangedListener
@@ -171,6 +168,7 @@ class MainActivity : AppCompatActivity() {
         binding.btnSave.isEnabled =
             binding.etTitle.text
                 .toString()
-                .isNotBlank() && selectedDate != null
+                .isNotBlank() &&
+            selectedDate != null
     }
 }
