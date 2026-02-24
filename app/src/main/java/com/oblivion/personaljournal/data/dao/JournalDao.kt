@@ -29,6 +29,14 @@ interface JournalDao {
     @Query("DELETE FROM journal_entries WHERE id = :id")
     suspend fun deleteById(id: Long)
 
-    @Query("SELECT * FROM journal_entries WHERE title LIKE '%' || :query || '%' OR content LIKE '%' || :query || '%'")
+    @Query(
+        """
+        SELECT * FROM journal_entries
+        WHERE title LIKE '%' || :query || '%'
+           OR content LIKE '%' || :query || '%'
+           OR tags LIKE '%' || :query || '%'
+           OR strftime('%d/%m/%Y', date / 1000, 'unixepoch', 'localtime') LIKE '%' || :query || '%'
+        """,
+    )
     fun searchEntries(query: String): Flow<List<JournalEntity>>
 }
