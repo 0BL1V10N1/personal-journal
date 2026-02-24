@@ -24,11 +24,9 @@ class JournalViewModel
 
         val searchResults: LiveData<List<JournalEntity>> =
             searchQuery.switchMap { query ->
-                if (query.isNullOrBlank()) {
-                    repository.allEntries.asLiveData()
-                } else {
-                    repository.searchEntries(query).asLiveData()
-                }
+                if (query.isBlank()) return@switchMap repository.allEntries.asLiveData()
+
+                repository.searchEntries(query).asLiveData()
             }
 
         fun setSearchQuery(query: String) {

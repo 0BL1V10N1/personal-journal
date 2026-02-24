@@ -44,6 +44,9 @@
     <string name="label_tags">Tags</string>
     <string name="label_no_content">Pas de contenu</string>
 
+    <!-- Toast messages -->
+    <string name="toast_max_tags">Vous ne pouvez ajouter que %d tags.</string>
+
     <!-- Search -->
     <string name="search_hint">Rechercher des entrées…</string>
 </resources>

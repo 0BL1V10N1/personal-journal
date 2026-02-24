@@ -3,25 +3,30 @@ package com.oblivion.personaljournal.data.repository
 import com.oblivion.personaljournal.data.dao.JournalDao
 import com.oblivion.personaljournal.data.entity.JournalEntity
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class JournalRepository(
-    private val journalDao: JournalDao,
-) {
-    val allEntries: Flow<List<JournalEntity>> = journalDao.getAllEntries()
+@Singleton
+class JournalRepository
+    @Inject
+    constructor(
+        private val journalDao: JournalDao,
+    ) {
+        val allEntries: Flow<List<JournalEntity>> = journalDao.getAllEntries()
 
-    fun searchEntries(query: String): Flow<List<JournalEntity>> = journalDao.searchEntries(query)
+        fun searchEntries(query: String): Flow<List<JournalEntity>> = journalDao.searchEntries(query)
 
-    suspend fun insert(entry: JournalEntity): Long = journalDao.insert(entry)
+        suspend fun insert(entry: JournalEntity): Long = journalDao.insert(entry)
 
-    suspend fun update(entry: JournalEntity) {
-        journalDao.update(entry)
+        suspend fun update(entry: JournalEntity) {
+            journalDao.update(entry)
+        }
+
+        suspend fun delete(entry: JournalEntity) {
+            journalDao.delete(entry)
+        }
+
+        suspend fun deleteById(id: Long) {
+            journalDao.deleteById(id)
+        }
     }
-
-    suspend fun delete(entry: JournalEntity) {
-        journalDao.delete(entry)
-    }
-
-    suspend fun deleteById(id: Long) {
-        journalDao.deleteById(id)
-    }
-}

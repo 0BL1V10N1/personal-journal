@@ -11,14 +11,14 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.oblivion.personaljournal.R
 import com.oblivion.personaljournal.data.entity.JournalEntity
-import com.oblivion.personaljournal.databinding.JournalItemBinding
+import com.oblivion.personaljournal.databinding.ItemJournalEntryBinding
 import com.oblivion.personaljournal.utils.DateUtils
 
 class JournalAdapter(
     private val onMenuClick: (JournalEntity, MenuItem) -> Unit,
 ) : ListAdapter<JournalEntity, JournalAdapter.JournalViewHolder>(JournalDiffCallback()) {
     inner class JournalViewHolder(
-        val binding: JournalItemBinding,
+        val binding: ItemJournalEntryBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.ivMenu.setOnClickListener { view ->
@@ -32,7 +32,7 @@ class JournalAdapter(
         fun bind(item: JournalEntity) {
             with(binding) {
                 tvTitle.text = item.title
-                tvDate.text = DateUtils.dateFormat.format(item.date)
+                tvDate.text = DateUtils.formatDate(item.date)
                 tvTags.isVisible = item.tags.isNotEmpty()
                 tvTags.text = item.tags.joinToString(" ") { "#$it" }
             }
@@ -43,7 +43,7 @@ class JournalAdapter(
             item: JournalEntity,
         ) {
             val popup = PopupMenu(view.context, view)
-            popup.menuInflater.inflate(R.menu.menu_journal_item, popup.menu)
+            popup.menuInflater.inflate(R.menu.menu_journal_entry, popup.menu)
 
             popup.setOnMenuItemClickListener { menuItem ->
                 onMenuClick(item, menuItem)
@@ -59,11 +59,12 @@ class JournalAdapter(
         viewType: Int,
     ): JournalViewHolder {
         val binding =
-            JournalItemBinding.inflate(
+            ItemJournalEntryBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false,
             )
+
         return JournalViewHolder(binding)
     }
 

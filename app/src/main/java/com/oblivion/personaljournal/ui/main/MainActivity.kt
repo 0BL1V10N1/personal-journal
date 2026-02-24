@@ -3,9 +3,11 @@ package com.oblivion.personaljournal.ui.main
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.MenuItem
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.core.widget.addTextChangedListener
@@ -37,8 +39,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        restoreStatusBarColor()
-
         dialogHelper =
             JournalDialogHelper(
                 activity = this,
@@ -54,23 +54,17 @@ class MainActivity : AppCompatActivity() {
         updateButtonState()
     }
 
+    // Edge-to-edge setup with padding for system bars
+    // Edge-to-edge is enabled by default in the api 35+
     private fun setupWindowInsets() {
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, windowInsets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.clLayout) { view, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
             view.updatePadding(
                 top = insets.top,
                 bottom = insets.bottom,
             )
-            WindowInsetsCompat.CONSUMED
-        }
-    }
 
-    // Restore status bar color overridden by edge-to-edge (activity-ktx >= 1.9.0)
-    @Suppress("DEPRECATION") // window.statusBarColor deprecated in API 35, still works on API < 35
-    private fun restoreStatusBarColor() {
-        val typedValue = TypedValue()
-        if (theme.resolveAttribute(com.google.android.material.R.attr.colorSurface, typedValue, true)) {
-            window.statusBarColor = typedValue.data
+            WindowInsetsCompat.CONSUMED
         }
     }
 
@@ -95,30 +89,12 @@ class MainActivity : AppCompatActivity() {
         ChipUtils.setupTagInput(this, binding.etTag, binding.cgTags)
     }
 
-    private fun handleMenuAction(
-        item: JournalEntity,
-        menuItem: MenuItem,
-        hideSearchOnEdit: Boolean = false,
-    ) {
-        when (menuItem.itemId) {
-            R.id.menu_edit -> {
-                if (hideSearchOnEdit) binding.svSearch.hide()
-                dialogHelper.showEditDialog(item, binding.root)
-            }
-            R.id.menu_delete -> dialogHelper.showDeleteDialog(item)
-            R.id.menu_detail -> dialogHelper.showDetailDialog(item)
-        }
-    }
-
     private fun setupRecyclerView() {
         val adapter = JournalAdapter { item, menuItem -> handleMenuAction(item, menuItem) }
         binding.rvJournal.adapter = adapter
         binding.rvJournal.layoutManager = LinearLayoutManager(this)
 
-        val searchAdapter =
-            JournalAdapter { item, menuItem ->
-                handleMenuAction(item, menuItem, hideSearchOnEdit = true)
-            }
+        val searchAdapter = JournalAdapter { item, menuItem -> handleMenuAction(item, menuItem, true) }
         binding.rvSearchResults.adapter = searchAdapter
         binding.rvSearchResults.layoutManager = LinearLayoutManager(this)
 
@@ -139,11 +115,32 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun handleMenuAction(
+        item: JournalEntity,
+        menuItem: MenuItem,
+        hideSearchOnEdit: Boolean = false,
+    ) {
+        when (menuItem.itemId) {
+            R.id.menu_edit -> {
+                if (hideSearchOnEdit) binding.svSearch.hide()
+                dialogHelper.showEditDialog(item, binding.root)
+            }
+
+            R.id.menu_delete -> {
+                dialogHelper.showDeleteDialog(item)
+            }
+
+            R.id.menu_detail -> {
+                dialogHelper.showDetailDialog(item)
+            }
+        }
+    }
+
     private fun addItem() {
         val entry =
             JournalEntity(
-                title = binding.etTitle.text?.toString().orEmpty(),
-                content = binding.etContent.text?.toString().orEmpty(),
+                title = binding.etTitle.text.toString(),
+                content = binding.etContent.text.toString(),
                 date = selectedDate!!,
                 tags = ChipUtils.extractChipTexts(binding.cgTags),
             )
@@ -172,6 +169,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateButtonState() {
         binding.btnSave.isEnabled =
-            !binding.etTitle.text?.toString().isNullOrBlank() && selectedDate != null
+            binding.etTitle.text
+                .toString()
+                .isNotBlank() && selectedDate != null
     }
 }
