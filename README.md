@@ -19,11 +19,7 @@
 ## 🎬 Demo
 
 <p align="center">
-   
-
-https://github.com/user-attachments/assets/0a6dbbaf-9d34-4d95-943c-4dfba0ed6e49
-
-
+    <video src="https://github.com/user-attachments/assets/0a6dbbaf-9d34-4d95-943c-4dfba0ed6e49" width="300" controls></video>
 </p>
 
 ## ✨ Features
