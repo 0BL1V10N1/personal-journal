@@ -16,18 +16,11 @@
   <img src="https://img.shields.io/badge/License-MIT-blue" alt="License" />
 </p>
 
----
-
 ## 🎬 Demo
 
 <p align="center">
-  <video src="https://github.com/user-attachments/assets/606ada91-2eb2-472d-b6e8-0d3efcf42907" width="300" controls></video>
+  https://github.com/user-attachments/assets/606ada91-2eb2-472d-b6e8-0d3efcf42907
 </p>
-
-> *If the video doesn't load in your browser, you
-can [download it directly](https://github.com/user-attachments/assets/606ada91-2eb2-472d-b6e8-0d3efcf42907).*
-
----
 
 ## ✨ Features
 
@@ -53,31 +46,31 @@ can [download it directly](https://github.com/user-attachments/assets/606ada91-2
 
 ## 🚀 Getting Started
 
-### ✅ Requirements
+- ### ✅ Requirements
+    
+  | Requirement | Version                      |
+          |:------------|:-----------------------------|
+  | JDK         | 17                           |
+  | Android SDK | API Level 36                 |
+  | IDE         | Android Studio (recommended) |
 
-| Requirement | Version                      |
-|:------------|:-----------------------------|
-| JDK         | 17                           |
-| Android SDK | API Level 36                 |
-| IDE         | Android Studio (recommended) |
+- ### 📥 Installation
 
-### 📥 Installation
+    ```bash
+    # 1. Clone the repository
+    git clone <repo-url>
+    cd personal-journal
+    ```
 
-```bash
-# 1. Clone the repository
-git clone <repo-url>
-cd personal-journal
-```
+- ### ▶️ Run the App
 
-### ▶️ Run the App
+    1. Open in **Android Studio** → `Open` → select project folder → let Gradle sync
+    2. Connect a device or start an emulator
+    3. Click the **Run** button (▶️) or run:
 
-1. Open in **Android Studio** → `Open` → select project folder → let Gradle sync
-2. Connect a device or start an emulator
-3. Click the **Run** button (▶️) or run:
-
-```powershell
-.\gradlew.bat installDebug
-```
+    ```powershell
+    .\gradlew.bat installDebug
+    ```
 
 ---
 
@@ -85,46 +78,37 @@ cd personal-journal
 
 Use the included Gradle wrapper for consistent results.
 
-### 🔨 Build & Run
+- ### 🔨 Build & Run
 
-| Task               | Command                       | Description          |
-|:-------------------|:------------------------------|:---------------------|
-| 🔨 **Build APK**   | `.\gradlew.bat assembleDebug` | Builds the debug APK |
-| ▶️ **Install App** | `.\gradlew.bat installDebug`  | Installs on device   |
+  | Task               | Command                       | Description          |
+                    |:-------------------|:------------------------------|:---------------------|
+  | 🔨 **Build APK**   | `.\gradlew.bat assembleDebug` | Builds the debug APK |
+  | ▶️ **Install App** | `.\gradlew.bat installDebug`  | Installs on device   |
 
-### 🧹 Code Quality
+- ### 🧹 Code Quality
 
-| Task                | Command                      | Description                              |
-|:--------------------|:-----------------------------|:-----------------------------------------|
-| ✏️ **Format Code**  | `.\gradlew.bat ktlintFormat` | Formats all Kotlin files                 |
-| 🔎 **Check Format** | `.\gradlew.bat ktlintCheck`  | Checks formatting without changing files |
-| 🧪 **Analyze**      | `.\gradlew.bat detekt`       | Runs static analysis for bugs/smells     |
-
----
+  | Task                | Command                      | Description                              |
+                      |:--------------------|:-----------------------------|:-----------------------------------------|
+  | ✏️ **Format Code**  | `.\gradlew.bat ktlintFormat` | Formats all Kotlin files                 |
+  | 🔎 **Check Format** | `.\gradlew.bat ktlintCheck`  | Checks formatting without changing files |
+  | 🧪 **Analyze**      | `.\gradlew.bat detekt`       | Runs static analysis for bugs/smells     |
 
 ## 🧹 Code Style & Quality
 
 > To ensure code consistency across all contributors:
 
-### 📏 Rules
+- ### 📏 Rules
 
-1. **`.editorconfig`** — Ensures consistent indentation and styling.
-2. **Linting** — **KtLint** for style enforcement, **Detekt** for deeper analysis.
-3. **Pre-commit** — Run `.\gradlew.bat ktlintFormat` before pushing your code.
+    1. **`.editorconfig`** — Ensures consistent indentation and styling.
+    2. **Linting** — **KtLint** for style enforcement, **Detekt** for deeper analysis.
+    3. **Pre-commit** — Run `.\gradlew.bat ktlintFormat` before pushing your code.
 
-### 📦 Recommended Plugins (IntelliJ / Android Studio)
+- ### 📦 Recommended Plugins (IntelliJ / Android Studio)
 
-<details>
-<summary>See plugins list</summary>
-
-- 🟢 **Kotlin**
-- 🤖 **Android**
-- 🔍 **Detekt**
-- 🧹 **KtLint**
-
-</details>
-
----
+    - 🟢 **Kotlin**
+    - 🤖 **Android**
+    - 🔍 **Detekt**
+    - 🧹 **KtLint**
 
 ## 🤝 Contributing
 
