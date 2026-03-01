@@ -31,8 +31,6 @@
 | 📅  | **Date Picker**     | Select dates easily using `MaterialDatePicker`            |
 | 🎨  | **Material Design** | Built with Material Components for a modern look and feel |
 
----
-
 ## 🛠 Tech Stack & Libraries
 
 | Category            | Details                                          |
@@ -42,11 +40,10 @@
 | **Static Analysis** | 🕵️ [Detekt](https://detekt.dev/)                |
 | **Formatting**      | 🧹 [KtLint](https://pinterest.github.io/ktlint/) |
 
----
-
 ## 🚀 Getting Started
 
 - ### ✅ Requirements
+
   | Requirement | Version                      |
   |:------------|:-----------------------------|
   | JDK         | 17                           |
@@ -71,11 +68,7 @@
     .\gradlew.bat installDebug
     ```
 
----
-
 ## 💻 Command Line (PowerShell)
-
-Use the included Gradle wrapper for consistent results.
 
 - ### 🔨 Build & Run
 
@@ -94,13 +87,11 @@ Use the included Gradle wrapper for consistent results.
 
 ## 🧹 Code Style & Quality
 
-> To ensure code consistency across all contributors:
-
 - ### 📏 Rules
 
-    1. **`.editorconfig`** — Ensures consistent indentation and styling.
-    2. **Linting** — **KtLint** for style enforcement, **Detekt** for deeper analysis.
-    3. **Pre-commit** — Run `.\gradlew.bat ktlintFormat` before pushing your code.
+    - **`.editorconfig`** — Ensures consistent indentation and styling.
+    - **Linting** — **KtLint** for style enforcement, **Detekt** for deeper analysis.
+    - **Pre-commit** — Run `.\gradlew.bat ktlintFormat` before pushing your code.
 
 - ### 📦 Recommended Plugins (IntelliJ / Android Studio)
 
