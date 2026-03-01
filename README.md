@@ -53,20 +53,19 @@
 - ### 📥 Installation
 
     ```bash
-    # 1. Clone the repository
     git clone <repo-url>
     cd personal-journal
     ```
 
 - ### ▶️ Run the App
 
-    1. Open in **Android Studio** → `Open` → select project folder → let Gradle sync
-    2. Connect a device or start an emulator
-    3. Click the **Run** button (▶️) or run:
+    - Open in **Android Studio** → `Open` → select project folder → let Gradle sync
+    - Connect a device or start an emulator
+    - Click the **Run** button (▶️) or run:
 
-    ```powershell
-    .\gradlew.bat installDebug
-    ```
+    	```powershell
+    	.\gradlew.bat installDebug
+    	```
 
 ## 💻 Command Line (PowerShell)
 
@@ -84,21 +83,6 @@
   | ✏️ **Format Code**  | `.\gradlew.bat ktlintFormat` | Formats all Kotlin files                 |
   | 🔎 **Check Format** | `.\gradlew.bat ktlintCheck`  | Checks formatting without changing files |
   | 🧪 **Analyze**      | `.\gradlew.bat detekt`       | Runs static analysis for bugs/smells     |
-
-## 🧹 Code Style & Quality
-
-- ### 📏 Rules
-
-    - **`.editorconfig`** — Ensures consistent indentation and styling.
-    - **Linting** — **KtLint** for style enforcement, **Detekt** for deeper analysis.
-    - **Pre-commit** — Run `.\gradlew.bat ktlintFormat` before pushing your code.
-
-- ### 📦 Recommended Plugins (IntelliJ / Android Studio)
-
-    - 🟢 **Kotlin**
-    - 🤖 **Android**
-    - 🔍 **Detekt**
-    - 🧹 **KtLint**
 
 ## 🤝 Contributing
 
