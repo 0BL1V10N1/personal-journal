@@ -1,11 +1,6 @@
 package com.oblivion.personaljournal.data.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import com.oblivion.personaljournal.data.entity.JournalEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -13,9 +8,6 @@ import kotlinx.coroutines.flow.Flow
 interface JournalDao {
     @Query("SELECT * FROM journal_entries")
     fun getAllEntries(): Flow<List<JournalEntity>>
-
-    @Query("SELECT * FROM journal_entries WHERE id = :id")
-    suspend fun getEntryById(id: Long): JournalEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entry: JournalEntity): Long
