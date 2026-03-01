@@ -47,12 +47,11 @@
 ## 🚀 Getting Started
 
 - ### ✅ Requirements
-
-  | Requirement | Version |
-      |:------------|:-----------------------------|
-  | JDK | 17 |
-  | Android SDK | API Level 36 |
-  | IDE | Android Studio (recommended) |
+  | Requirement | Version                      |
+  |:------------|:-----------------------------|
+  | JDK         | 17                           |
+  | Android SDK | API Level 36                 |
+  | IDE         | Android Studio (recommended) |
 
 - ### 📥 Installation
 
@@ -81,14 +80,14 @@ Use the included Gradle wrapper for consistent results.
 - ### 🔨 Build & Run
 
   | Task               | Command                       | Description          |
-                            |:-------------------|:------------------------------|:---------------------|
+  |:-------------------|:------------------------------|:---------------------|
   | 🔨 **Build APK**   | `.\gradlew.bat assembleDebug` | Builds the debug APK |
   | ▶️ **Install App** | `.\gradlew.bat installDebug`  | Installs on device   |
 
 - ### 🧹 Code Quality
 
   | Task                | Command                      | Description                              |
-                              |:--------------------|:-----------------------------|:-----------------------------------------|
+  |:--------------------|:-----------------------------|:-----------------------------------------|
   | ✏️ **Format Code**  | `.\gradlew.bat ktlintFormat` | Formats all Kotlin files                 |
   | 🔎 **Check Format** | `.\gradlew.bat ktlintCheck`  | Checks formatting without changing files |
   | 🧪 **Analyze**      | `.\gradlew.bat detekt`       | Runs static analysis for bugs/smells     |
