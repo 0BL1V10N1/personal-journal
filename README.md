@@ -13,7 +13,7 @@
   <img src="https://img.shields.io/badge/Kotlin-2.0-7F52FF?logo=kotlin&logoColor=white" alt="Kotlin" />
   <img src="https://img.shields.io/badge/Android-API%2026+-3DDC84?logo=android&logoColor=white" alt="Android" />
   <img src="https://img.shields.io/badge/Material%20Design-3-757575?logo=materialdesign&logoColor=white" alt="Material Design" />
-  <img src="https://img.shields.io/badge/License-Open-blue?logo=github&logoColor=white" alt="License" />
+  <img src="https://img.shields.io/github/license/0BL1V10N1/personal-journal.svg" alt="License" />
 </p>
 
 ## 🎬 Demo
