@@ -10,16 +10,16 @@
 </p>
 
 <p align="center">
-  <a href="https://kotlinlang.org/" target="_blank" rel="noopener">
+  <a href="https://kotlinlang.org/" target="_blank" rel="noopener" style="text-decoration:none;">
     <img src="https://img.shields.io/badge/Kotlin-2.0-7F52FF?logo=kotlin&logoColor=white" alt="Kotlin" />
   </a>
-  <a href="https://developer.android.com/" target="_blank" rel="noopener">
+  <a href="https://developer.android.com/" target="_blank" rel="noopener" style="text-decoration:none;">
     <img src="https://img.shields.io/badge/Android-API%2026+-3DDC84?logo=android&logoColor=white" alt="Android" />
   </a>
-  <a href="https://m3.material.io/" target="_blank" rel="noopener">
+  <a href="https://m3.material.io/" target="_blank" rel="noopener" style="text-decoration:none;">
     <img src="https://img.shields.io/badge/Material%20Design-3-757575?logo=materialdesign&logoColor=white" alt="Material Design" />
   </a>
-  <a href="./LICENSE" target="_blank" rel="noopener">
+  <a href="./LICENSE" target="_blank" rel="noopener" style="text-decoration:none;">
     <img src="https://img.shields.io/badge/License-MIT-blue" alt="License" />
   </a>
 </p>
