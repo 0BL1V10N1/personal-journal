@@ -100,11 +100,3 @@ Contributions are welcome! Here's how to get started:
 <a href="https://github.com/0BL1V10N1/personal-journal/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=0BL1V10N1/personal-journal" />
 </a>
-
----
-
-<p align="center">
-  Made with ❤️ in Kotlin
-</p>
-
-
