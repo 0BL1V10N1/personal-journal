@@ -53,7 +53,7 @@
 - ### 📥 Installation
 
     ```bash
-    git clone <repo-url>
+    git clone https://github.com/0BL1V10N1/personal-journal.git
     cd personal-journal
     ```
 
