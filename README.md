@@ -95,6 +95,12 @@ Contributions are welcome! Here's how to get started:
 5. **Push** to the branch
 6. **Open** a Pull Request
 
+## 👥 Contributors
+
+<a href="https://github.com/0BL1V10N1/personal-journal/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=0BL1V10N1/personal-journal" />
+</a>
+
 ---
 
 <p align="center">
